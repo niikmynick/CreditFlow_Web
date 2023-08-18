@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <label>
+            Конкурсная масса
+            <input type="number" name="cash" value="{{ cash }}">
+        </label>
+
+        <label>
+            Количество кредиторов
+            <input type="number" name="amount" value="{{ creditors_amount }}">
+        </label>
+
+        {% for i in creditors_range %}
+            <div>
+
+                <label>
+                    Название кредитора
+                    <input type="text" name="creditor_{{ i }}_name" placeholder="Название">
+                </label>
+
+                <label>
+                    Долг
+                    <input type="text" name="creditor_{{ i }}_value" placeholder="Долг">
+                </label>
+
+                <label>
+                    Является ли комиссия процентом?
+                    <input type="checkbox" name="creditor_{{ i }}_is_percent">
+                </label>
+
+                <label>
+                    Размер комиссии
+                    <input type="text" name="creditor_{{ i }}_percent_or_fee" placeholder="Плата или процент">
+                </label>
+            </div>
+        {% endfor %}
+
+        <input type="submit" value="Распределить">
+
+    </form>
+
+{% endblock %}

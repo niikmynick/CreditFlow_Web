@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+
+        <div>
+            <label>
+                Конкурсная масса
+                <input type="number" name="cash" placeholder="Конкурсная масса" value="{{ cash }}">
+            </label>
+        </div>
+
+        <div>
+            <label>
+                Количество кредиторов
+                <input type="number" name="amount" placeholder="Количество кредиторов" value="{{ creditors_amount }}">
+            </label>
+        </div>
+
+        <button type="submit">Далее</button>
+
+    </form>
+
+{% endblock %}
