@@ -48,7 +48,7 @@ def get_creditors_info(request):
     if request.method == 'POST':
 
         cash = float(request.POST.get('cash'))
-        creditors_amount = int(request.POST.get('amount'))
+        creditors_amount = request.session.get('creditors_amount')
         creditors = []
 
         for i in range(creditors_amount):

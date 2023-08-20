@@ -1,46 +1,92 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
     <form action="" method="post">
         {% csrf_token %}
 
-        <label>
-            Конкурсная масса
-            <input type="number" name="cash" value="{{ cash }}">
-        </label>
+        <div class="top-bar">
 
-        <label>
-            Количество кредиторов
-            <input type="number" name="amount" value="{{ creditors_amount }}">
-        </label>
-
-        {% for i in creditors_range %}
-            <div>
-
-                <label>
-                    Название кредитора
-                    <input type="text" name="creditor_{{ i }}_name" placeholder="Название">
-                </label>
-
-                <label>
-                    Долг
-                    <input type="text" name="creditor_{{ i }}_value" placeholder="Долг">
-                </label>
-
-                <label>
-                    Является ли комиссия процентом?
-                    <input type="checkbox" name="creditor_{{ i }}_is_percent">
-                </label>
-
-                <label>
-                    Размер комиссии
-                    <input type="text" name="creditor_{{ i }}_percent_or_fee" placeholder="Плата или процент">
-                </label>
+            <div class="logo">
+                CreditFlow
             </div>
-        {% endfor %}
 
-        <input type="submit" value="Распределить">
+            <div class="info-box-vert-temp">
+
+                <div class="info-box-hor">
+                    <div class="form-group-hor">
+                        <label for="cash" class="inp-lbl">Конкурсная масса</label>
+
+                        <div class="type-input">
+                            <img src="{% static 'img/cash-white.png' %}" alt="">
+                            <input type="number" name="cash" class="form-control" id="cash" value="{{ cash }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group-hor">
+                        <label for="amount" class="inp-lbl">Количество кредиторов</label>
+
+                        <div class="type-input">
+                            <img src="{% static 'img/creditors-white.png' %}" alt="">
+                            <input type="number" name="amount" class="form-control" id="amount" value="{{ creditors_amount }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box-hor">
+                    <button type="submit" class="btn-distribute">Распределить</button>
+                    <button type="submit" class="btn-add">Добавить кредитора</button>
+                    <button type="submit" class="btn-clear">Очистить все</button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="creditors">
+
+            {% for i in creditors_range %}
+                <div class="info-box-vert">
+                    <div class="form-group-vert">
+                        <label for="name" class="inp-lbl">Название кредитора</label>
+
+                        <div class="type-input">
+{#                            <img src="{% static 'img/cash-white.png' %}" alt="">#}
+                            <input type="text" name="creditor_{{ i }}_name" class="form-control" id="name" placeholder="Название">
+                        </div>
+                    </div>
+
+                    <div class="form-group-vert">
+                        <label for="value" class="inp-lbl">Долг</label>
+
+                        <div class="type-input">
+{#                            <img src="{% static 'img/cash-white.png' %}" alt="">#}
+                             <input type="text" name="creditor_{{ i }}_value" class="form-control" id="value" placeholder="Долг">
+                        </div>
+                    </div>
+
+                    <div class="form-group-vert">
+                        <label for="is_percent" class="inp-lbl">Является ли комиссия процентом?</label>
+
+                        <div class="type-input">
+{#                            <img src="{% static 'img/cash-white.png' %}" alt="">#}
+                             <input type="checkbox" name="creditor_{{ i }}_is_percent" class="" id="is_percent">
+                        </div>
+                    </div>
+
+                    <div class="form-group-vert">
+                        <label for="percent_or_fee" class="inp-lbl">Размер комиссии</label>
+
+                        <div class="type-input">
+{#                            <img src="{% static 'img/cash-white.png' %}" alt="">#}
+                             <input type="text" name="creditor_{{ i }}_percent_or_fee" class="form-control" id="percent_or_fee" placeholder="Плата или процент">
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+
+        </div>
 
     </form>
 

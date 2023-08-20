@@ -1,25 +1,37 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 
     <form action="" method="post">
         {% csrf_token %}
 
-        <div>
-            <label>
-                Конкурсная масса
-                <input type="number" name="cash" placeholder="Конкурсная масса" value="{{ cash }}">
-            </label>
+        <div class="logo">
+            CreditFlow
         </div>
 
-        <div>
-            <label>
-                Количество кредиторов
-                <input type="number" name="amount" placeholder="Количество кредиторов" value="{{ creditors_amount }}">
-            </label>
-        </div>
+        <div class="info-box-vert">
 
-        <button type="submit">Далее</button>
+            <div class="form-group-vert">
+                <label for="cash" class="inp-lbl">Конкурсная масса</label>
+
+                <div class="type-input">
+                    <img src="{% static 'img/cash-white.png' %}" alt="">
+                    <input type="number" name="cash" class="form-control" id="cash" placeholder="Введите конкурсную массу" value="{{ cash }}">
+                </div>
+            </div>
+
+            <div class="form-group-vert">
+                <label for="amount" class="inp-lbl">Количество кредиторов</label>
+
+                <div class="type-input">
+                    <img src="{% static 'img/creditors-white.png' %}" alt="">
+                    <input type="number" name="amount" class="form-control" id="amount" placeholder="Введите количество кредиторов" value="{{ creditors_amount }}">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-primary">Далее</button>
+        </div>
 
     </form>
 
