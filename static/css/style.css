@@ -14,7 +14,8 @@ body {
     min-height: 100vh;
     padding: 0 10px;
     background: #221f2f;
-    overflow: hidden;
+    overflow: scroll;
+    scroll-behavior: smooth;
 }
 
 .error-info {
