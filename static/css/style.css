@@ -121,6 +121,23 @@ body {
     padding: 0 28px;
 }
 
+a:link { text-decoration: none; }
+
+
+a:visited { text-decoration: none; }
+
+
+a:hover { text-decoration: none; }
+
+
+a:active { text-decoration: none; }
+
+a {
+    color: white;
+    font-family: "Arial Black", sans-serif;
+    font-size: 4rem;
+}
+
 .type-input {
     display: flex;
     width: 100%;

@@ -9,7 +9,7 @@
         <div class="top-bar">
 
             <div class="logo">
-                CreditFlow
+                <a href="{% url 'index' %}">CreditFlow</a>
             </div>
 
             <div class="info-box-vert-temp">
@@ -54,7 +54,7 @@
 
                         <div class="type-input">
 {#                            <img src="{% static 'img/cash-white.png' %}" alt="">#}
-                            <input type="text" name="creditor_{{ i }}_name" class="form-control" id="name" placeholder="Название">
+                            <input type="text" name="creditor_{{ i }}_name" class="form-control" id="name" placeholder="Введите название">
                         </div>
                     </div>
 
@@ -63,7 +63,7 @@
 
                         <div class="type-input">
 {#                            <img src="{% static 'img/cash-white.png' %}" alt="">#}
-                             <input type="text" name="creditor_{{ i }}_value" class="form-control" id="value" placeholder="Долг">
+                             <input type="number" name="creditor_{{ i }}_value" class="form-control" id="value" placeholder="Введите сумму">
                         </div>
                     </div>
 
@@ -85,7 +85,7 @@
 
                         <div class="type-input">
 {#                            <img src="{% static 'img/cash-white.png' %}" alt="">#}
-                             <input type="text" name="creditor_{{ i }}_percent_or_fee" class="form-control" id="percent_or_fee" placeholder="Плата или процент">
+                             <input type="number" name="creditor_{{ i }}_percent_or_fee" class="form-control" id="percent_or_fee" placeholder="Введите размер комиссии">
                         </div>
                     </div>
 
