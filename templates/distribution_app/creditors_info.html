@@ -66,11 +66,15 @@
                     </div>
 
                     <div class="form-group-vert">
-                        <label for="is_percent" class="inp-lbl">Является ли комиссия процентом?</label>
+{#                        <input type="checkbox" name="creditor_{{ i }}_is_percent" class="form-checkbox" id="is_percent">#}
+                        <label for="type" class="inp-lbl">Тип комиссии</label>
 
-                        <div class="type-input">
+                        <div class="select-input">
 {#                            <img src="{% static 'img/cash-white.png' %}" alt="">#}
-                             <input type="checkbox" name="creditor_{{ i }}_is_percent" class="" id="is_percent">
+                            <select name="creditor_{{ i }}_type" id="type">
+                                <option value="percent">Процент</option>
+                                <option value="fixed">Фиксированнная плата</option>
+                            </select>
                         </div>
                     </div>
 

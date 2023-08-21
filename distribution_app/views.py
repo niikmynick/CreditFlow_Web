@@ -33,10 +33,13 @@ def get_creditors_info(request):
                 template_name='errors/access_error.html'
             )
 
+        cash = request.session.get('cash')
+        creditors_amount = request.session.get('creditors_amount')
+
         context = {
-            'cash': request.session.get('cash'),
-            'creditors_amount': request.session.get('creditors_amount'),
-            'creditors_range': range(request.session.get('creditors_amount'))
+            'cash': cash,
+            'creditors_amount': creditors_amount,
+            'creditors_range': range(creditors_amount),
         }
 
         return render(
@@ -52,10 +55,12 @@ def get_creditors_info(request):
         creditors = []
 
         for i in range(creditors_amount):
+            fee_type = request.POST.get(f'creditor_{i}_type')
+
             creditor = {
                 'name': request.POST.get(f'creditor_{i}_name'),
                 'value': float(request.POST.get(f'creditor_{i}_value')),
-                'is_percent': bool(request.POST.get(f'creditor_{i}_is_percent')),
+                'is_percent': True if fee_type == 'percent' else False,
                 'percent_or_fee': float(request.POST.get(f'creditor_{i}_percent_or_fee'))
             }
             creditors.append(creditor)
@@ -83,6 +88,8 @@ def show_results(request):
         context = calculate(cash, creditors)
         context['cash'] = cash
         context['creditors'] = creditors
+
+        request.session.clear()
 
         return render(
             request=request,
