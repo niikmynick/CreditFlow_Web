@@ -11,9 +11,21 @@ def get_info(request):
         )
 
     if request.method == 'POST':
+        try:
+            cash = float(request.POST.get('cash'))
+            creditors_amount = int(request.POST.get('amount'))
 
-        cash = float(request.POST.get('cash'))
-        creditors_amount = int(request.POST.get('amount'))
+            if cash <= 0 or creditors_amount <= 0:
+                raise Exception
+
+        except Exception:
+            return render(
+                request=request,
+                template_name='distribution_app/index.html',
+                context={
+                    'response': '<div class="form-group-hor">Для продолжения заполните все поля</div>'
+                }
+            )
 
         request.session['cash'] = cash
         request.session['creditors_amount'] = creditors_amount
@@ -51,19 +63,35 @@ def get_creditors_info(request):
     if request.method == 'POST':
 
         cash = float(request.POST.get('cash'))
-        creditors_amount = request.session.get('creditors_amount')
+        creditors_amount = int(request.POST.get('amount'))
         creditors = []
 
         for i in range(creditors_amount):
             fee_type = request.POST.get(f'creditor_{i}_type')
 
-            creditor = {
-                'name': request.POST.get(f'creditor_{i}_name'),
-                'value': float(request.POST.get(f'creditor_{i}_value')),
-                'is_percent': True if fee_type == 'percent' else False,
-                'percent_or_fee': float(request.POST.get(f'creditor_{i}_percent_or_fee'))
-            }
-            creditors.append(creditor)
+            try:
+                creditor = {}
+                creditor['name'] = request.POST.get(f'creditor_{i}_name')
+                creditor['value'] = float(request.POST.get(f'creditor_{i}_value'))
+                creditor['is_percent'] = True if fee_type == 'percent' else False
+                creditor['percent_or_fee'] = float(request.POST.get(f'creditor_{i}_percent_or_fee'))
+
+                if creditor['value'] <= 0 or creditor['percent_or_fee'] <= 0:
+                    raise Exception
+
+                creditors.append(creditor)
+
+            except Exception:
+                return render(
+                    request=request,
+                    template_name='distribution_app/creditors_info.html',
+                    context={
+                        'cash': cash,
+                        'creditors_amount': creditors_amount,
+                        'creditors_range': range(creditors_amount),
+                        'response': '<div class="form-group-hor">Для продолжения заполните все поля</div>'
+                    }
+                )
 
         request.session['creditors'] = creditors
         request.session['cash'] = cash
@@ -89,7 +117,7 @@ def show_results(request):
         context['cash'] = cash
         context['creditors'] = creditors
 
-        request.session.clear()
+        # request.session.clear()
 
         return render(
             request=request,
@@ -144,6 +172,11 @@ def calculate(cash, inp_creditors):
             bank_payments[name] = temp + conditions[name]['percent_or_fee']
             total_fees[name] = conditions[name]['percent_or_fee']
 
+    if sum(total_fees.values()) > cash:
+        response = '<div class="response"><p>Внимание!</p><p>Предполгаемая комиссия больше конкурсной массы</p></div>'
+    else:
+        response = ''
+
     return {
         'total_debt': sum(creditors.values()),
         'total_creditors_get': sum(creditors_get.values()),
@@ -151,7 +184,8 @@ def calculate(cash, inp_creditors):
         'ratio': ratio,
         'creditors_get': creditors_get,
         'bank_payments': bank_payments,
-        'total_fees': total_fees
+        'total_fees': total_fees,
+        'response': response
     }
 
 

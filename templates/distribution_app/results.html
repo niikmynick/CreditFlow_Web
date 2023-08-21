@@ -1,44 +1,53 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="results">
+    <h1 class="results-title">Результаты расчета</h1>
 
-    <div class="results">
-
-        <h1>Результаты расчета</h1>
-
-        <h3>Общая информация</h3>
-        <p>Сумма требований: {{ total_debt }}</p>
-        <p>Сумма средств к распределению: {{ cash }}</p>
-        <p>Сумма погашения требований: {{ total_creditors_get|floatformat:2 }}</p>
-
-        <h3>Доли кредиторов:</h3>
-        <ul>
-        {% for creditor, percent in ratio.items %}
-            <li>{{ creditor }}: {{ percent|floatformat:2 }}%</li>
-        {% endfor %}
-        </ul>
-
-        <h3>Размеры погашения требований:</h3>
-        <ul>
-        {% for creditor, payment in creditors_get.items %}
-          <li>{{ creditor }}: {{ payment|floatformat:2 }}</li>
-        {% endfor %}
-        </ul>
-
-        <h3>Размеры комиссий:</h3>
-        <ul>
-        {% for creditor, fee in total_fees.items %}
-          <li>{{ creditor }}: {{ fee|floatformat:2 }}</li>
-        {% endfor %}
-        </ul>
-
-        <h3>Переводы с учетом комиссии:</h3>
-        <ul>
-        {% for creditor, payment in bank_payments.items %}
-          <li>{{ creditor }}: {{ payment|floatformat:2 }}</li>
-        {% endfor %}
-        </ul>
-
+    <div class="info-section">
+        <h3 class="info-heading">Общая информация</h3>
+        <p class="info-line">Сумма требований: {{ total_debt }}</p>
+        <p class="info-line">Сумма средств к распределению: {{ cash }}</p>
+        <p class="info-line">Сумма погашения требований: {{ total_creditors_get|floatformat:2 }}</p>
     </div>
 
+    <div class="creditor-ratios">
+        <h3 class="ratio-heading">Доли кредиторов:</h3>
+        <ul class="ratio-list">
+            {% for creditor, percent in ratio.items %}
+            <li class="ratio-item">{{ creditor }}: {{ percent|floatformat:2 }}%</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="payment-sizes">
+        <h3 class="payment-heading">Размеры погашения требований:</h3>
+        <ul class="payment-list">
+            {% for creditor, payment in creditors_get.items %}
+            <li class="payment-item">{{ creditor }}: {{ payment|floatformat:2 }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="fee-sizes">
+        <h3 class="fee-heading">Размеры комиссий:</h3>
+        <ul class="fee-list">
+            {% for creditor, fee in total_fees.items %}
+            <li class="fee-item">{{ creditor }}: {{ fee|floatformat:2 }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="payments-with-fees">
+        <h3 class="payments-with-fees-heading">Переводы с учетом комиссии:</h3>
+        <ul class="payments-with-fees-list">
+            {% for creditor, payment in bank_payments.items %}
+            <li class="payments-with-fees-item">{{ creditor }}: {{ payment|floatformat:2 }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {{ response | safe }}
+
+</div>
 {% endblock %}
